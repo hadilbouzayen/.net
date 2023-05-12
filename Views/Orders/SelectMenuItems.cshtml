@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebAppTest3.Models.MyRestaurant.MenuItemViewModel>
+
+@{
+    ViewData["Title"] = "menuItemsViewModel";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSelected)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSelected)
+            </td>
+                <td>
+                    <form method="post" asp-action="AddToOrder" asp-controller="Orders">
+                        <input type="hidden" name="menuItemId" value="@item.Id" />
+
+                        @if (item.IsSelected)
+                        {
+                            <button type="submit" class="btn btn-danger">Remove from Order</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary">Add to Order</button>
+                        }
+                    </form>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
